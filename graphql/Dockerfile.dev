@@ -1,0 +1,15 @@
+FROM node:14.4-alpine
+
+EXPOSE 3000
+
+WORKDIR /app
+
+CMD [ "npm", "start" ]
+
+COPY package*.json ./
+
+RUN npm install --production --verbose
+
+COPY src/ ./src/
+
+USER node

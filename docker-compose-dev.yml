@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - graphql
+    ports:
+      - 80:80
+    volumes:
+      - ./gateway/conf.d:/etc/nginx/conf.d
+    restart: always
+  graphql:
+    build:
+      context: ./graphql
+      dockerfile: Dockerfile.dev
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    volumes:
+      - ./graphql/src:/app/src
+    restart: always
