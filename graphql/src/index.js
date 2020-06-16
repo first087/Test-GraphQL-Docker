@@ -11,7 +11,7 @@ const schema = buildSchema(`
   }
 `);
 
-const rootValue = {
+const resolver = {
   hello: () => 'Hi!',
   world: () => 'Yo!!!',
 }
@@ -19,7 +19,7 @@ const rootValue = {
 app
   .use('/', graphqlHTTP({
     schema,
-    rootValue,
+    rootValue: resolver,
     graphiql: true,
   }))
   .listen(3000)
