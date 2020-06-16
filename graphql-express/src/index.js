@@ -8,12 +8,19 @@ const schema = buildSchema(`
   type Query {
     hello: String
     world: String
+    user: User
+  }
+
+  type User {
+    firstName: String
+    lastName: String
   }
 `);
 
 const resolver = {
   hello: () => 'Hi!',
-  world: () => 'Yo!!!',
+  world: () => 'Yo!',
+  user: () => ({ firstName: 'Ethan', lastName: 'Hunt' })
 }
 
 app
