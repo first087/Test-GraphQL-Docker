@@ -10,22 +10,27 @@ const schema = buildSchema(`
   type Query {
     hello: String
     world: String
-    user: User
+    users: [User]
   }
 
   type User {
     firstName: String
     lastName: String
   }
-`);
+`)
 
 const resolver = {
   hello: () => 'Hi!',
   world: () => 'Yo!',
-  user: () => {
-    const { first: firstName, last: lastName } = users[0].name
-
-    return Promise.resolve({ firstName, lastName })
+  users: () => {
+    return Promise.resolve(
+      users.map(user => {
+        return {
+          firstName: user.name.first,
+          lastName: user.name.last
+        }
+      })
+    )
   }
 }
 
