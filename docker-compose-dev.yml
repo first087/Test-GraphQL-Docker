@@ -6,20 +6,20 @@ services:
       context: ./gateway
       dockerfile: Dockerfile.dev
     depends_on:
-      - graphql
+      - graphql-express
     ports:
       - 80:80
     volumes:
       - ./gateway/conf.d:/etc/nginx/conf.d
     restart: always
-  graphql:
+  graphql-express:
     build:
-      context: ./graphql
+      context: ./graphql-express
       dockerfile: Dockerfile.dev
       args:
         - http_proxy
         - https_proxy
         - no_proxy
     volumes:
-      - ./graphql/src:/app/src
+      - ./graphql-express/src:/app/src
     restart: always
