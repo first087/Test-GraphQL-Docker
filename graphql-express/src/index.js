@@ -10,7 +10,7 @@ const schema = buildSchema(`
   type Query {
     hello: String
     world: String
-    users: [User]
+    users(id: ID): [User]
   }
 
   type User {
@@ -22,14 +22,16 @@ const schema = buildSchema(`
 const resolver = {
   hello: () => 'Hi!',
   world: () => 'Yo!',
-  users: () => {
+  users: ({ id }) => {
     return Promise.resolve(
-      users.map(user => {
-        return {
-          firstName: user.name.first,
-          lastName: user.name.last
-        }
-      })
+      users
+        .filter(user => (id == null) ? true : user.id == id)
+        .map(user => {
+          return {
+            firstName: user.name.first,
+            lastName: user.name.last
+          }
+        })
     )
   }
 }
